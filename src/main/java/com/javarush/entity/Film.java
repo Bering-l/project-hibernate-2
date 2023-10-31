@@ -1,15 +1,20 @@
 package com.javarush.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.Year;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(schema = "movie", name = "film")
+@Getter @Setter
 public class Film {
     @Id
     @Column(name = "film_id")
@@ -51,5 +56,17 @@ public class Film {
     @Column(name = "last_update")
     @UpdateTimestamp
     private LocalDateTime lastUpdate;
+
+    @ManyToMany
+    @JoinTable(name = "film_category",
+            joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "film_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "category_id"))
+    private Set<Category> category;
+
+    @ManyToMany
+    @JoinTable(name = "film_actor",
+            joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "film_id"),
+            inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "actor_id"))
+    private List<Actor> actor;
 
 }
