@@ -14,12 +14,13 @@ import java.util.Set;
 
 @Entity
 @Table(schema = "movie", name = "film")
-@Getter @Setter
+@Getter
+@Setter
 public class Film {
     @Id
     @Column(name = "film_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     private String title;
     @Column(columnDefinition = "text")
