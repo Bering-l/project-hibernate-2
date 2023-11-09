@@ -4,7 +4,7 @@ import com.javarush.domain.FilmText;
 import org.hibernate.SessionFactory;
 
 public class FilmTextDAO extends GenericDAO<FilmText> {
-    public FilmTextDAO(Class<FilmText> clazz, SessionFactory sessionFactory) {
-        super(clazz, sessionFactory);
+    public FilmTextDAO(SessionFactory sessionFactory) {
+        super(FilmText.class, sessionFactory);
     }
 }

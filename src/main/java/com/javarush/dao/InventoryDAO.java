@@ -1,9 +1,10 @@
 package com.javarush.dao;
 
+import com.javarush.domain.Inventory;
 import org.hibernate.SessionFactory;
 
-public class InventoryDAO extends GenericDAO<InventoryDAO> {
-    public InventoryDAO(Class<InventoryDAO> clazz, SessionFactory sessionFactory) {
-        super(clazz, sessionFactory);
+public class InventoryDAO extends GenericDAO<Inventory> {
+    public InventoryDAO(SessionFactory sessionFactory) {
+        super(Inventory.class, sessionFactory);
     }
 }
