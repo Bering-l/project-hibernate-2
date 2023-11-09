@@ -1,6 +1,7 @@
 package com.javarush;
 
-import com.javarush.entity.*;
+import com.javarush.dao.*;
+import com.javarush.domain.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
@@ -10,7 +11,39 @@ import java.util.Properties;
 public class Main {
 
     private final SessionFactory sessionFactory;
-    public Main() {
+
+    private final ActorDAO actorDAO;
+
+    private final AddressDAO addressDAO;
+    private final CategoryDAO categoryDAO;
+    private final CityDAO cityDAO;
+    private final CustomerDAO customerDAO;
+    private final FilmDAO filmDAO;
+    private final FilmTextDAO filmTextDAO;
+    private final InventoryDAO inventoryDAO;
+    private final LanguageDAO languageDAO;
+    private final PaymentDAO paymentDAO;
+    private final RentalDAO rentalDAO;
+    private final StaffDAO staffDAO;
+    private final StoreDAO storeDAO;
+
+    public Main(ActorDAO actorDAO, AddressDAO addressDAO, CategoryDAO categoryDAO,
+                CityDAO cityDAO, CustomerDAO customerDAO, FilmDAO filmDAO, FilmTextDAO filmTextDAO,
+                InventoryDAO inventoryDAO, LanguageDAO languageDAO, PaymentDAO paymentDAO,
+                RentalDAO rentalDAO, StaffDAO staffDAO, StoreDAO storeDAO) {
+        this.actorDAO = actorDAO;
+        this.addressDAO = addressDAO;
+        this.categoryDAO = categoryDAO;
+        this.cityDAO = cityDAO;
+        this.customerDAO = customerDAO;
+        this.filmDAO = filmDAO;
+        this.filmTextDAO = filmTextDAO;
+        this.inventoryDAO = inventoryDAO;
+        this.languageDAO = languageDAO;
+        this.paymentDAO = paymentDAO;
+        this.rentalDAO = rentalDAO;
+        this.staffDAO = staffDAO;
+        this.storeDAO = storeDAO;
         Properties properties = new Properties();
         properties.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
         properties.put(Environment.DRIVER, "com.p6spy.engine.spy.P6SpyDriver");
@@ -37,9 +70,5 @@ public class Main {
                 .addAnnotatedClass(Store.class)
                 .addProperties(properties)
                 .buildSessionFactory();
-    }
-
-    public static void main(String[] args) {
-
     }
 }

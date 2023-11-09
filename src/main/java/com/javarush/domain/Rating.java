@@ -1,4 +1,4 @@
-package com.javarush.entity;
+package com.javarush.domain;
 
 public enum Rating {
     G("G"),

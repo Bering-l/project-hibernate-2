@@ -1,11 +1,10 @@
-package com.javarush.entity;
+package com.javarush.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +12,7 @@ import java.time.LocalDateTime;
 @Table(schema = "movie", name = "customer")
 @Getter
 @Setter
-public class Customer {
+public class Customer extends LastUpdate {
     @Id
     @Column(name = "customer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +41,4 @@ public class Customer {
     @CreationTimestamp
     private LocalDateTime createDate;
 
-    @Column(name = "last_update")
-    @UpdateTimestamp
-    private LocalDateTime lastUpdate;
 }

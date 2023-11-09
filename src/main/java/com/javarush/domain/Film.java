@@ -1,13 +1,11 @@
-package com.javarush.entity;
+package com.javarush.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.List;
 import java.util.Set;
@@ -16,7 +14,7 @@ import java.util.Set;
 @Table(schema = "movie", name = "film")
 @Getter
 @Setter
-public class Film {
+public class Film extends LastUpdate {
     @Id
     @Column(name = "film_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,24 +48,15 @@ public class Film {
     @Column(columnDefinition = "enum('G', 'PG', 'PG-13', 'R', 'NC-17')")
     private Rating rating;
 
-    @Column(name = "special_features",
-            columnDefinition = "set('Trailers', 'Commentaries', 'Deleted Scenes', 'Behind the Scenes')")
+    @Column(name = "special_features", columnDefinition = "set('Trailers', 'Commentaries', 'Deleted Scenes', 'Behind the Scenes')")
     private String specialFeatures;
 
-    @Column(name = "last_update")
-    @UpdateTimestamp
-    private LocalDateTime lastUpdate;
-
     @ManyToMany
-    @JoinTable(name = "film_category",
-            joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "film_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "category_id"))
+    @JoinTable(name = "film_category", joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "film_id"), inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "category_id"))
     private Set<Category> category;
 
     @ManyToMany
-    @JoinTable(name = "film_actor",
-            joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "film_id"),
-            inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "actor_id"))
+    @JoinTable(name = "film_actor", joinColumns = @JoinColumn(name = "film_id", referencedColumnName = "film_id"), inverseJoinColumns = @JoinColumn(name = "actor_id", referencedColumnName = "actor_id"))
     private List<Actor> actor;
 
 }

@@ -1,13 +1,11 @@
-package com.javarush.entity;
+package com.javarush.domain;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
 
 @Entity
 @Table(schema = "movie", name = "store")
-public class Store {
+public class Store extends LastUpdate {
     @Id
     @Column(name = "store_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +19,4 @@ public class Store {
     @JoinColumn(name = "address_id")
     private Address address;
 
-    @Column(name = "last_update")
-    @UpdateTimestamp
-    private LocalDateTime lastUpdate;
 }

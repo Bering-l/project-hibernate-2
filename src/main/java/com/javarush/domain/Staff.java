@@ -1,18 +1,15 @@
-package com.javarush.entity;
+package com.javarush.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(schema = "movie", name = "staff")
 @Getter
 @Setter
-public class Staff {
+public class Staff extends LastUpdate {
     @Id
     @Column(name = "staff_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,8 +36,5 @@ public class Staff {
     private Boolean isActive;
 
     private String password;
-    @Column(name = "last_update")
-    @UpdateTimestamp
-    private LocalDateTime lastUpdate;
     
 }

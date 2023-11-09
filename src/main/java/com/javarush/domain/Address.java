@@ -1,17 +1,14 @@
-package com.javarush.entity;
+package com.javarush.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(schema = "movie", name = "address")
 @Getter
 @Setter
-public class Address {
+public class Address extends LastUpdate {
     @Id
     @Column(name = "address_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +16,7 @@ public class Address {
 
     private String address;
     private String address2;
-    private  String district;
+    private String district;
 
     @ManyToOne
     @JoinColumn(name = "city_id")
@@ -32,8 +29,4 @@ public class Address {
 
     @Column(name = "location")
     private Geometry location;
-
-    @Column(name = "last_update")
-    @UpdateTimestamp
-    private LocalDateTime lastUpdate;
 }
