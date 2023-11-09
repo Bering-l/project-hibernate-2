@@ -1,17 +1,16 @@
-package com.javarush.entity;
+package com.javarush.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Table(schema = "movie", name = "actor")
-@Getter @Setter
-public class Actor {
+@Getter
+@Setter
+public class Actor extends LastUpdate {
     @Id
     @Column(name = "actor_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,10 +20,6 @@ public class Actor {
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
-
-    @Column(name = "last_update")
-    @UpdateTimestamp
-    private LocalDateTime lastUpdate;
 
     @ManyToMany
     @JoinTable(name = "film_actor",

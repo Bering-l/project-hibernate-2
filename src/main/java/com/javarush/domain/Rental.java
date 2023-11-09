@@ -1,9 +1,8 @@
-package com.javarush.entity;
+package com.javarush.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +10,7 @@ import java.time.LocalDateTime;
 @Table(schema = "movie", name = "rental")
 @Getter
 @Setter
-public class Rental {
+public class Rental extends LastUpdate {
     @Id
     @Column(name = "rental_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +34,4 @@ public class Rental {
     @JoinColumn(name = "staff_id")
     private Staff staff;
 
-    @Column(name = "last_update")
-    @UpdateTimestamp
-    private LocalDateTime lastUpdate;
 }

@@ -1,17 +1,14 @@
-package com.javarush.entity;
+package com.javarush.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(schema = "movie", name = "language")
 @Getter
 @Setter
-public class Language {
+public class Language extends LastUpdate {
 
     @Id
     @Column
@@ -19,8 +16,5 @@ public class Language {
     private Byte id;
     @Column(columnDefinition = "char")
     private String name;
-    @Column(name = "last_update")
-    @UpdateTimestamp
-    private LocalDateTime lastUpdate;
 
 }
