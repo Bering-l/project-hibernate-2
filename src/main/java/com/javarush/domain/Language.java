@@ -11,7 +11,7 @@ import lombok.Setter;
 public class Language extends LastUpdate {
 
     @Id
-    @Column
+    @Column(name = "language_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Byte id;
     @Column(columnDefinition = "char")
