@@ -24,6 +24,7 @@ public class Staff extends LastUpdate {
     @JoinColumn(name = "address_id")
     private Address address;
     @Lob
+    @Column(columnDefinition="BLOB")
     private byte[] picture;
 
     private String email;

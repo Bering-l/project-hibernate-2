@@ -27,6 +27,6 @@ public class Address extends LastUpdate {
 
     private String phone;
 
-    @Column(name = "location")
-    private Geometry location;
+/*    @Column(name = "location")
+    private Geometry location;*/
 }

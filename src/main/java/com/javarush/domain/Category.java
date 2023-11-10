@@ -12,6 +12,7 @@ import java.util.Set;
 @Setter
 public class Category extends LastUpdate {
     @Id
+    @Column(name = "category_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Byte id;
 

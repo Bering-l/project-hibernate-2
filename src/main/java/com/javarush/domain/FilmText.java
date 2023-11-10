@@ -15,6 +15,7 @@ public class FilmText {
     private Short id;
     @OneToOne
     @JoinColumn(name = "film_id")
+    @MapsId
     private Film film;
 
     private String title;

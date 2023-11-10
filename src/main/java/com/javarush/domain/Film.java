@@ -18,7 +18,7 @@ public class Film extends LastUpdate {
     @Id
     @Column(name = "film_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Short id;
 
     private String title;
     @Column(columnDefinition = "text")
