@@ -26,7 +26,4 @@ public class Address extends LastUpdate {
     private String postalCode;
 
     private String phone;
-
-/*    @Column(name = "location")
-    private Geometry location;*/
 }
