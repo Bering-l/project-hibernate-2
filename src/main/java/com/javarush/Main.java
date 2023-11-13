@@ -7,7 +7,9 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 
-import java.util.Properties;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.*;
 
 public class Main {
 
@@ -50,6 +52,7 @@ public class Main {
                 .addAnnotatedClass(Customer.class)
                 .addAnnotatedClass(Feature.class)
                 .addAnnotatedClass(Film.class)
+                .addAnnotatedClass(FilmText.class)
                 .addAnnotatedClass(Inventory.class)
                 .addAnnotatedClass(Language.class)
                 .addAnnotatedClass(Payment.class)
@@ -79,6 +82,46 @@ public class Main {
     public static void main(String[] args) {
         Main main = new Main();
         Customer customer = main.createCustomer();
+        main.customerReturnInventoryToStore();
+        main.customerRentInventory(customer);
+        main.newFilmAvailableForRent();
+    }
+
+    private void newFilmAvailableForRent() {
+        try (Session session = sessionFactory.getCurrentSession()) {
+            session.beginTransaction();
+
+            Language language = languageDAO.getItems(0, 30)
+                    .stream()
+                    .unordered()
+                    .findAny()
+                    .get();
+            List<Category> category = categoryDAO.getItems(0, 3);
+            List<Actor> actors = actorDAO.getItems(0, 30);
+
+            Film film = new Film();
+            film.setActor(new ArrayList<>(actors));
+            film.setOriginalLanguage(language);
+            film.setLanguage(language);
+            film.setRating(Rating.PG13);
+            film.setFeatures(Set.of(Feature.TRAILERS, Feature.COMMENTARIES));
+            film.setLength((short) 100);
+            film.setReplacementCost(BigDecimal.TEN);
+            film.setRentalRate(BigDecimal.ZERO);
+            film.setDescription("Description");
+            film.setTitle("Title");
+            film.setRentalDuration((byte) 17);
+            film.setCategory(new HashSet<>(category));
+            filmDAO.save(film);
+
+            FilmText filmText = new FilmText();
+            filmText.setFilm(film);
+            filmText.setDescription("Description");
+            filmText.setTitle("Title");
+            filmTextDAO.save(filmText);
+
+            session.getTransaction().commit();
+        }
     }
 
     private Customer createCustomer() {
@@ -96,6 +139,7 @@ public class Main {
             Customer customer = new Customer();
             customer.setFirstName("Anna");
             customer.setLastName("K");
+            customer.setEmail("jookbox@post.com");
             customer.setStore(store);
             customer.setAddress(address);
             customer.setIsActive(true);
@@ -103,6 +147,48 @@ public class Main {
 
             session.getTransaction().commit();
             return customer;
+        }
+    }
+
+    private void customerReturnInventoryToStore() {
+        try (Session session = sessionFactory.getCurrentSession()) {
+            session.beginTransaction();
+            Rental rental = rentalDAO.getAnyUnreturnedRental();
+            rental.setReturnDate(LocalDateTime.now());
+            rentalDAO.save(rental);
+            session.getTransaction().commit();
+        }
+    }
+
+    private void customerRentInventory(Customer customer) {
+        try (Session session = sessionFactory.getCurrentSession()) {
+            session.beginTransaction();
+
+            Film film = filmDAO.getFirstAvailableFilmForRent();
+            Store store = storeDAO.getItems(0, 1).get(0);
+            Inventory inventory = new Inventory();
+            inventory.setFilm(film);
+            inventory.setStore(store);
+            inventoryDAO.save(inventory);
+
+            Staff staff = store.getStaff();
+
+            Rental rental = new Rental();
+            rental.setCustomer(customer);
+            rental.setInventory(inventory);
+            rental.setRentalDate(LocalDateTime.now());
+            rental.setStaff(staff);
+            rentalDAO.save(rental);
+
+            Payment payment = new Payment();
+            payment.setCustomer(customer);
+            payment.setRental(rental);
+            payment.setPaymentDate(LocalDateTime.now());
+            payment.setAmount(BigDecimal.valueOf(3.99));
+            payment.setStaff(staff);
+            paymentDAO.save(payment);
+
+            session.getTransaction().commit();
         }
     }
 }

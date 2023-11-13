@@ -1,10 +1,14 @@
 package com.javarush.domain;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
 @Table(schema = "movie", name = "store")
+@Getter
+@Setter
 public class Store extends LastUpdate {
     @Id
     @Column(name = "store_id")

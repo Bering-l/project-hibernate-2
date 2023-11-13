@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
+@Getter
 @Entity
 @Table(schema = "movie", name = "staff")
-@Getter
 @Setter
 public class Staff extends LastUpdate {
     @Id
@@ -24,7 +24,7 @@ public class Staff extends LastUpdate {
     @JoinColumn(name = "address_id")
     private Address address;
     @Lob
-    @Column(columnDefinition="BLOB")
+    @Column(columnDefinition = "BLOB")
     private byte[] picture;
 
     private String email;
@@ -37,5 +37,5 @@ public class Staff extends LastUpdate {
     private Boolean isActive;
 
     private String password;
-    
+
 }
